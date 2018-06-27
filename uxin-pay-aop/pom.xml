@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.xin</groupId>
+    <artifactId>uxin-pay-aop</artifactId>
+    <version>1.0.1</version>
+
+    <distributionManagement>
+        <repository>
+            <id>uxinpay-releases</id>
+            <url>http://nexus.xin.com:8081/repository/uxinpay-releases/</url>
+        </repository>
+    </distributionManagement>
+
+    <developers>
+        <developer>
+            <name>王莅平</name>
+            <url>https://github.com/lpwang</url>
+        </developer>
+    </developers>
+
+    <properties>
+        <springboot.version>1.5.9.RELEASE</springboot.version>
+        <fast-json-version>1.2.45</fast-json-version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+            <version>${springboot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>${springboot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+            <version>${springboot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fast-json-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xin</groupId>
+            <artifactId>dateutils</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
+</project>
