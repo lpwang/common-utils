@@ -5,9 +5,7 @@ import com.alibaba.fastjson.JSONPath;
 import com.xin.dateutils.date.CurrentDateTimeUtils;
 import com.xin.pay.aop.channel.constant.*;
 import com.xin.pay.aop.exception.ChannelEntryBuildException;
-import com.xin.pay.aop.log.LogFactory;
 import org.aspectj.lang.JoinPoint;
-import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 
