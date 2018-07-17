@@ -12,25 +12,31 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author lpwang
- * @Title RespPaymentHandler
- * @Package com.xin.pay.aop.channel.handler
- * @Description: channel响应payment切面拦截
- * @date 2018-06-23 11:53
+ * @Title AgreementQuickReqHandler
+ * @Package com.xin.pay.aop.channel.handler.channel
+ * @Description: 快捷协议请求处理类
+ * @date 2018-07-09 11:41
  */
 
 @Aspect
 @Component
-public class ChannelRespPaymentHandler extends AbstractHandler {
+public class AgreementQuickReqHandler extends AbstractHandler {
 
-    @Pointcut(value = PointCutConfig.CHANNEL_RESP_PAYMENT_POINTCUT)
-    public void pointCut() {
+    @Pointcut(value = PointCutConfig.AGREEMENT_REQ_INSERT_POINTCUT)
+    public void insertPointCut() {
 
     }
 
-    @Before("pointCut()")
+    @Pointcut(value = PointCutConfig.AGREEMENT_REQ_INSERTSELECT_POINTCUT)
+    public void insertSelectivePointCut() {
+
+    }
+
+    @Before("insertPointCut() || insertSelectivePointCut()")
     @Override
     public void before(JoinPoint joinPoint) {
-        ChannelEntry channelEntry = new ChannelEntry().buildRespPayment(joinPoint);
+        ChannelEntry channelEntry = new ChannelEntry().buildQuickInsertMapper(joinPoint);
         LogFactory.newLoggerWrite().writeChannelLog(channelEntry);
     }
+
 }

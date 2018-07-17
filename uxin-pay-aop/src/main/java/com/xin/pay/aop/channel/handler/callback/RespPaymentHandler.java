@@ -3,11 +3,16 @@ package com.xin.pay.aop.channel.handler.callback;
 import com.xin.pay.aop.channel.entry.ChannelEntry;
 import com.xin.pay.aop.channel.handler.AbstractHandler;
 import com.xin.pay.aop.config.PointCutConfig;
+import com.xin.pay.aop.exception.CallbackSystemException;
 import com.xin.pay.aop.log.LogFactory;
+import com.xin.pay.aop.utils.StackExceptionUtils;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,7 +24,10 @@ import org.springframework.stereotype.Component;
  */
 @Aspect
 @Component
-public class CallbackRespPaymentHandler extends AbstractHandler {
+public class RespPaymentHandler extends AbstractHandler {
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
 
     @Pointcut(value = PointCutConfig.CALLBACK_RESP_PAYMENT_POINTCUT)
     public void pointCut() {
@@ -33,5 +41,13 @@ public class CallbackRespPaymentHandler extends AbstractHandler {
         LogFactory.newLoggerWrite().writeChannelLog(channelEntry);
     }
 
-
+    @Override
+    public Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+        try {
+            Object arg = handleAsynResp(proceedingJoinPoint, redisTemplate);
+            return proceedingJoinPoint.proceed(new Object[]{arg});
+        } catch (Throwable e) {
+            throw new CallbackSystemException(StackExceptionUtils.getStackMessage(e));
+        }
+    }
 }

@@ -1,6 +1,9 @@
 package com.xin.dateutils.date;
 
+import com.xin.dateutils.Contants.DateFormatConstant;
+
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * @author lpwang
@@ -15,6 +18,18 @@ public class CurrentDateUtils {
 
     public static LocalDate currentDate() {
         return LocalDate.now();
+    }
+
+    public static String plain() {
+        return currentDate().format(DateTimeFormatter.ofPattern(DateFormatConstant.plain));
+    }
+
+    public static String standard() {
+        return currentDate().format(DateTimeFormatter.ofPattern(DateFormatConstant.standard));
+    }
+
+    public static String point() {
+        return currentDate().format(DateTimeFormatter.ofPattern(DateFormatConstant.point));
     }
 
 }

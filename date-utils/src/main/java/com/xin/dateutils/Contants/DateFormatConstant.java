@@ -11,5 +11,6 @@ public class DateFormatConstant {
 
     public static final String plain = "yyyyMMdd";
     public static final String standard = "yyyy-MM-dd";
+    public static final String point = "yyyy.MM.dd";
 
 }

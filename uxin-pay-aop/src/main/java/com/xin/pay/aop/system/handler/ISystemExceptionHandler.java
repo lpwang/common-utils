@@ -1,5 +1,7 @@
 package com.xin.pay.aop.system.handler;
 
+import org.aspectj.lang.ProceedingJoinPoint;
+
 /**
  * @author lpwang
  * @Title ISystemExceptionHandler
@@ -7,8 +9,8 @@ package com.xin.pay.aop.system.handler;
  * @Description: 系统异常处理接口
  * @date 2018-06-23 16:03
  */
-public interface ISystemExceptionHandler {
+public interface ISystemExceptionHandler extends IHandleSystemException {
 
-    void handleException(Throwable exception);
+    Object around(ProceedingJoinPoint proceedingJoinPoint);
 
 }

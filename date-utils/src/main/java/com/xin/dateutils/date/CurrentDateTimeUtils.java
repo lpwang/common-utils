@@ -36,7 +36,7 @@ public class CurrentDateTimeUtils implements IDateTime {
     }
 
     public static String MSStandard() {
-        return localDateTime().format(DateTimeFormatter.ofPattern(DateTimeFormatConstant.yMdHms));
+        return localDateTime().format(DateTimeFormatter.ofPattern(DateTimeFormatConstant.yMdHmsS));
     }
 
 }

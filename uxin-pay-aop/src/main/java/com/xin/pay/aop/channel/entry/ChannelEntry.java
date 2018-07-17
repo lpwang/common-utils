@@ -140,7 +140,7 @@ public class ChannelEntry {
             this.setChannelNo(channel_no);
             this.setCommand(Command.PAY_DEDUCTED);
             this.setServiceName(ServiceName.PAY_CHANNEL);
-            if (null == requestDateTime) {
+            if (null != requestDateTime) {
                 this.setTime(requestDateTime);
             }
             return this;
@@ -157,6 +157,7 @@ public class ChannelEntry {
             String content = (String) respObjClass.getDeclaredMethod(RespPayment.CONTENT).invoke(respObj);
             JSONObject contentJsonObject = JSONObject.parseObject(content);
 
+            this.setChannelCode((String) JSONPath.eval(contentJsonObject, "$.channelCode"));
             this.setServiceName(ServiceName.PAY_CHANNEL);
             this.setTime((String) JSONPath.eval(contentJsonObject, "$.payTime"));
             this.setStatus((String) JSONPath.eval(contentJsonObject, "$.payStatus"));
@@ -164,12 +165,51 @@ public class ChannelEntry {
             this.setChannelNo((String) JSONPath.eval(contentJsonObject, "$.channelNo"));
             this.setChannelReturnNO((String) JSONPath.eval(contentJsonObject, "$.channelReturnNo"));
             this.setChannelCode((String) JSONPath.eval(contentJsonObject, "$.channelCode"));
-            //todo 处理errorCode和errorMessage,从redis中获取信息
             this.setRespCode((String) JSONPath.eval(contentJsonObject, "$.responseCode"));
             this.setRespMsg((String) JSONPath.eval(contentJsonObject, "$.responseMessage"));
             return this;
         } catch (Exception e) {
             throw new ChannelEntryBuildException("返回payment的实体解析构建失败" + e.getMessage());
+        }
+    }
+
+    public ChannelEntry buildQuickRespPayment(Object respObj) {
+        try {
+            Class<?> respObjClass = respObj.getClass();
+
+            this.setServiceName(ServiceName.PAY_CHANNEL);
+            this.setTime((String) respObjClass.getDeclaredMethod("getPayTime").invoke(respObj));
+            this.setStatus((String) respObjClass.getDeclaredMethod("getPayStatus").invoke(respObj));
+            this.setCommand(Command.PAY_QUICK);
+            this.setChannelNo((String) respObjClass.getDeclaredMethod("getChannelNo").invoke(respObj));
+            this.setChannelReturnNO((String) respObjClass.getDeclaredMethod("getChannelReturnNo").invoke(respObj));
+            this.setRespCode((String) respObjClass.getDeclaredMethod("getResponseCode").invoke(respObj));
+            this.setRespMsg((String) respObjClass.getDeclaredMethod("getResponseMessage").invoke(respObj));
+            return this;
+        } catch (Exception e) {
+            throw new ChannelEntryBuildException("返回payment的实体解析构建失败" + e.getMessage());
+        }
+    }
+
+    public ChannelEntry buildQuickInsertMapper(JoinPoint joinPoint) {
+        try {
+            Object instants = joinPoint.getArgs()[0];
+            Class<?> instantsClass = instants.getClass();
+            BigDecimal amount = (BigDecimal) instantsClass.getDeclaredMethod(Withholding.AMOUNT_METHOD_NAME).invoke(instants);
+            String channel_code = (String) instantsClass.getDeclaredMethod(Withholding.CHANNEL_CODE_METHOD_NAME).invoke(instants);
+            String channel_no = (String) instantsClass.getDeclaredMethod(Withholding.CHANNEL_NO_METHOD_NAME).invoke(instants);
+            String requestDateTime = (String) instantsClass.getDeclaredMethod(Withholding.REQUEST_DATATIME_METHOD_NAME).invoke(instants);
+            this.setChannelCode(channel_code);
+            this.setAmount(String.valueOf(amount.longValue()));
+            this.setChannelNo(channel_no);
+            this.setCommand(Command.PAY_QUICK);
+            this.setServiceName(ServiceName.PAY_CHANNEL);
+            if (null != requestDateTime) {
+                this.setTime(requestDateTime);
+            }
+            return this;
+        } catch (Exception e) {
+            throw new ChannelEntryBuildException("插入快捷表实体解析构建失败" + e.getMessage());
         }
     }
 

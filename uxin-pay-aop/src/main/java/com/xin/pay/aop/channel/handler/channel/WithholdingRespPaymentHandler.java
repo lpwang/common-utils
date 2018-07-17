@@ -1,35 +1,44 @@
-package com.xin.pay.aop.channel.handler.job;
+package com.xin.pay.aop.channel.handler.channel;
 
+import com.alibaba.fastjson.JSONObject;
 import com.xin.pay.aop.channel.entry.ChannelEntry;
+import com.xin.pay.aop.channel.entry.ErrorCodeValueEntry;
+import com.xin.pay.aop.channel.entry.RespPaymentContentEntry;
 import com.xin.pay.aop.channel.handler.AbstractHandler;
 import com.xin.pay.aop.config.PointCutConfig;
-import com.xin.pay.aop.exception.CallbackSystemException;
+import com.xin.pay.aop.exception.AopOperationException;
+import com.xin.pay.aop.exception.ChannelSystemException;
 import com.xin.pay.aop.log.LogFactory;
+import com.xin.pay.aop.system.handler.IHandleSystemException;
+import com.xin.pay.aop.utils.KeyUtils;
 import com.xin.pay.aop.utils.StackExceptionUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 /**
  * @author lpwang
- * @Title JobRespPaymentHandler
+ * @Title RespPaymentHandler
  * @Package com.xin.pay.aop.channel.handler
- * @Description: job响应payment切面拦截
- * @date 2018-06-25 11:13
+ * @Description: channel响应payment切面拦截
+ * @date 2018-06-23 11:53
  */
+
 @Aspect
 @Component
-public class JobRespPaymentHandler extends AbstractHandler {
+public class WithholdingRespPaymentHandler extends AbstractHandler {
 
     @Autowired
     private StringRedisTemplate redisTemplate;
 
-    @Pointcut(value = PointCutConfig.JOB_RESP_PAYMENT_POINTCUT)
+    @Pointcut(value = PointCutConfig.CHANNEL_RESP_PAYMENT_POINTCUT)
     public void pointCut() {
 
     }
@@ -41,14 +50,16 @@ public class JobRespPaymentHandler extends AbstractHandler {
         LogFactory.newLoggerWrite().writeChannelLog(channelEntry);
     }
 
+    @Around("pointCut()")
     @Override
-    public Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+    public Object around(ProceedingJoinPoint proceedingJoinPoint) {
         try {
             Object arg = handleAsynResp(proceedingJoinPoint, redisTemplate);
             return proceedingJoinPoint.proceed(new Object[]{arg});
         } catch (Throwable e) {
-            throw new CallbackSystemException(StackExceptionUtils.getStackMessage(e));
+            throw new ChannelSystemException(StackExceptionUtils.getStackMessage(e));
         }
+
     }
 
 }

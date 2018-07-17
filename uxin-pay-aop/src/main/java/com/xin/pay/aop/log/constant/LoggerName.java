@@ -9,5 +9,5 @@ package com.xin.pay.aop.log.constant;
  */
 public class LoggerName {
 
-    public static final String FILE = "File";
+    public static final String FILE = "PayFileAppend";
 }
