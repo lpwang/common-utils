@@ -2,8 +2,11 @@ package com.xin.dateutils.date;
 
 import com.xin.dateutils.Contants.DateTimeFormatConstant;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * @author lpwang
@@ -16,6 +19,20 @@ public class DateTimeUtils {
 
     private DateTimeUtils() {
 
+    }
+
+    public static Date convertLDT(LocalDateTime localDateTime) {
+        ZoneId zone = ZoneId.systemDefault();
+        Instant instant = localDateTime.atZone(zone).toInstant();
+        Date date = Date.from(instant);
+        return date;
+    }
+
+    public static LocalDateTime convertDate(Date date) {
+        Instant instant = date.toInstant();
+        ZoneId zoneId = ZoneId.systemDefault();
+        LocalDateTime localDateTime = instant.atZone(zoneId).toLocalDateTime();
+        return localDateTime;
     }
 
     public static String theMinuteOfPoint(LocalDateTime localDateTime, int minuteGap) {

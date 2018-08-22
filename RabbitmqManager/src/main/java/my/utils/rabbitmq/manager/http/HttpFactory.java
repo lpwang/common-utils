@@ -23,7 +23,7 @@ public class HttpFactory {
     public static OkHttpClient getNewInstants() {
         return new OkHttpClient.Builder().authenticator(new Authenticator() {
             public Request authenticate(Route route, Response response) throws IOException {
-                String credential = Credentials.basic("xx", "xx");
+                String credential = Credentials.basic("uxinpay", "49sdf37er7");
                 return response.request().newBuilder()
                         .header("Authorization", credential)
                         .build();
