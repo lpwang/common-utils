@@ -24,6 +24,10 @@ public class CurrentDateUtils {
         return currentDate().format(DateTimeFormatter.ofPattern(DateFormatConstant.plain));
     }
 
+    public static String plain2Month() {
+        return currentDate().format(DateTimeFormatter.ofPattern(DateFormatConstant.plain2Month));
+    }
+
     public static String standard() {
         return currentDate().format(DateTimeFormatter.ofPattern(DateFormatConstant.standard));
     }
