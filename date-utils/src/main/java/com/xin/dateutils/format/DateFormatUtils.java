@@ -18,19 +18,19 @@ public class DateFormatUtils implements IDate {
 
     private DateFormatUtils(){}
 
-    public static String plain(Date date) {
+    public static synchronized String plain(Date date) {
         return PLAIN_SDF.format(date);
     }
 
-    public static String plain(LocalDate date) {
+    public static synchronized String plain(LocalDate date) {
         return date.format(DateTimeFormatter.ofPattern(DateFormatConstant.plain));
     }
 
-    public static String standard(Date date) {
+    public static synchronized String standard(Date date) {
         return STANDARD_SDF.format(date);
     }
 
-    public static String standard(LocalDate date) {
+    public static synchronized String standard(LocalDate date) {
         return date.format(DateTimeFormatter.ofPattern(DateFormatConstant.standard));
     }
 

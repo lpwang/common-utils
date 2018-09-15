@@ -16,23 +16,23 @@ public class CurrentDateUtils {
 
     private CurrentDateUtils(){}
 
-    public static LocalDate currentDate() {
+    public static synchronized LocalDate currentDate() {
         return LocalDate.now();
     }
 
-    public static String plain() {
+    public static synchronized String plain() {
         return currentDate().format(DateTimeFormatter.ofPattern(DateFormatConstant.plain));
     }
 
-    public static String plain2Month() {
+    public static synchronized String plain2Month() {
         return currentDate().format(DateTimeFormatter.ofPattern(DateFormatConstant.plain2Month));
     }
 
-    public static String standard() {
+    public static synchronized String standard() {
         return currentDate().format(DateTimeFormatter.ofPattern(DateFormatConstant.standard));
     }
 
-    public static String point() {
+    public static synchronized String point() {
         return currentDate().format(DateTimeFormatter.ofPattern(DateFormatConstant.point));
     }
 

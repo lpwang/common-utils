@@ -18,7 +18,7 @@ public class DateUtils {
 
     }
 
-    public static String theDayOfPoint(LocalDate localDate,int dateGap) {
+    public static synchronized String theDayOfPoint(LocalDate localDate,int dateGap) {
         String theDate = null;
         if (dateGap > 0) {
             theDate = localDate.plusDays(dateGap).format(DateTimeFormatter.ofPattern(DateFormatConstant.point));

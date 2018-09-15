@@ -19,13 +19,13 @@ import java.io.IOException;
  */
 public class GetMessage {
 
-    public static final String URL = "http://172.16.2.26:15672/api/queues/uxinpay.xin.com/payment-channel-queue.dlq/get";
-    public static final String REQ_CONTENT = "{\"count\":2635,\"requeue\":false,\"encoding\":\"auto\",\"truncate\":50000,\"name\":\"payment-channel-queue.dlq\",\"vhost\":\"uxinpay.xin.com\"}";
+    public static final String URL = "http://172.16.2.26:15672/api/queues/uxinpay.xin.com/pay-monitor-queue.dlq/get";
+    public static final String REQ_CONTENT = "{\"count\":25,\"requeue\":false,\"encoding\":\"auto\",\"truncate\":50000,\"name\":\"pay-monitor-queue.dlq\",\"vhost\":\"uxinpay.xin.com\"}";
 
 
     public static void main(String[] args) throws Exception {
 
-        File file = new File("/data/rmq/pay-channel");
+        File file = new File("/data/rmq/pay-monitor");
         Files.createParentDirs(file);
         OkHttpClient client = HttpFactory.getNewInstants();
 

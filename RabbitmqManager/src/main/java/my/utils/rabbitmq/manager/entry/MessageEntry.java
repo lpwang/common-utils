@@ -10,7 +10,7 @@ package my.utils.rabbitmq.manager.entry;
 public class MessageEntry {
 
     private properties properties;
-    private String routing_key = "pay-account-queue";
+    private String routing_key = "pay-monitor-queue";
     private String payload;
     private String payload_encoding = "string";
 
@@ -47,6 +47,14 @@ public class MessageEntry {
     }
 
     public static class properties {
+        private String content_type;
 
+        public String getContent_type() {
+            return content_type;
+        }
+
+        public void setContent_type(String content_type) {
+            this.content_type = content_type;
+        }
     }
 }

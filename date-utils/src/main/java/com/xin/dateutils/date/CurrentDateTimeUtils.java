@@ -15,27 +15,27 @@ import java.util.Date;
  */
 public class CurrentDateTimeUtils implements IDateTime {
 
-    public static Date date() {
+    public static synchronized Date date() {
         return new Date();
     }
 
-    public static LocalDateTime localDateTime() {
+    public static synchronized LocalDateTime localDateTime() {
         return LocalDateTime.now();
     }
 
-    public static String plain() {
+    public static synchronized String plain() {
         return localDateTime().format(DateTimeFormatter.ofPattern(DateTimeFormatConstant.yyyyMMddHHmmss));
     }
 
-    public static String standard() {
+    public static synchronized String standard() {
         return localDateTime().format(DateTimeFormatter.ofPattern(DateTimeFormatConstant.yMdHms));
     }
 
-    public static String MSPlain() {
+    public static synchronized String MSPlain() {
         return localDateTime().format(DateTimeFormatter.ofPattern(DateTimeFormatConstant.yyyyMMddHHmmssSSS));
     }
 
-    public static String MSStandard() {
+    public static synchronized String MSStandard() {
         return localDateTime().format(DateTimeFormatter.ofPattern(DateTimeFormatConstant.yMdHmsS));
     }
 

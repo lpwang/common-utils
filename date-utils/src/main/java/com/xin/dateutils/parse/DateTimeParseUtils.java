@@ -20,7 +20,7 @@ public class DateTimeParseUtils implements IDateTime {
     private DateTimeParseUtils() {
     }
 
-    public static Date plain(String yyyyMMddHHmmss) {
+    public static synchronized Date plain(String yyyyMMddHHmmss) {
         try {
             return yyyyMMddHHmmssSDF.parse(yyyyMMddHHmmss);
         } catch (ParseException e) {
@@ -28,12 +28,12 @@ public class DateTimeParseUtils implements IDateTime {
         }
     }
 
-    public static LocalDateTime plain4LDT(String yyyyMMddHHmmss) {
+    public static synchronized LocalDateTime plain4LDT(String yyyyMMddHHmmss) {
         return LocalDateTime.parse(yyyyMMddHHmmss, DateTimeFormatter.ofPattern(DateTimeFormatConstant.yyyyMMddHHmmss));
     }
 
 
-    public static Date standard(String yMdHms) {
+    public static synchronized Date standard(String yMdHms) {
         try {
             return yMdHmsSDF.parse(yMdHms);
         } catch (ParseException e) {
@@ -41,11 +41,11 @@ public class DateTimeParseUtils implements IDateTime {
         }
     }
 
-    public static LocalDateTime standard4LDT(String yMdHms) {
+    public static synchronized LocalDateTime standard4LDT(String yMdHms) {
         return LocalDateTime.parse(yMdHms, DateTimeFormatter.ofPattern(DateTimeFormatConstant.yMdHms));
     }
 
-    public static Date MSPlain(String yyyyMMddHHmmssSSS) {
+    public static synchronized Date MSPlain(String yyyyMMddHHmmssSSS) {
         try {
             return yyyyMMddHHmmssSSSSDF.parse(yyyyMMddHHmmssSSS);
         } catch (ParseException e) {
@@ -53,11 +53,11 @@ public class DateTimeParseUtils implements IDateTime {
         }
     }
 
-    public static LocalDateTime MSPlain4LDT(String yyyyMMddHHmmssSSS) {
+    public static synchronized LocalDateTime MSPlain4LDT(String yyyyMMddHHmmssSSS) {
         return LocalDateTime.parse(yyyyMMddHHmmssSSS, DateTimeFormatter.ofPattern(DateTimeFormatConstant.yyyyMMddHHmmssSSS));
     }
 
-    public static Date MSStandard(String yMdHmsS) {
+    public static synchronized Date MSStandard(String yMdHmsS) {
         try {
             return yMdHmsSSDF.parse(yMdHmsS);
         } catch (ParseException e) {
@@ -65,7 +65,7 @@ public class DateTimeParseUtils implements IDateTime {
         }
     }
 
-    public static LocalDateTime MSStandard4LDT(String yMdHmsS) {
+    public static synchronized LocalDateTime MSStandard4LDT(String yMdHmsS) {
         return LocalDateTime.parse(yMdHmsS, DateTimeFormatter.ofPattern(DateTimeFormatConstant.yMdHmsS));
     }
 }

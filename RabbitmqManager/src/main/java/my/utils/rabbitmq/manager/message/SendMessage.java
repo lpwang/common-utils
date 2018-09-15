@@ -20,10 +20,10 @@ import java.util.List;
  */
 public class SendMessage {
 
-    public static final String URL = "http://xx.xx.xx.xx:15672/api/exchanges/uxinpay.xin.com/payment-to-account/publish/";
+    public static final String URL = "http://172.16.2.26:15672/api/exchanges/uxinpay.xin.com/all-to-monitor/publish/";
 
     public static void main(String[] args) throws Exception {
-        File file = new File("/data/rmq/pay-account");
+        File file = new File("/data/rmq/pay-monitor");
         BufferedReader reader = Files.newReader(file, Charsets.UTF_8);
 
         OkHttpClient client = HttpFactory.getNewInstants();
@@ -33,7 +33,9 @@ public class SendMessage {
         int count = 0;
         while (null != (line = reader.readLine())) {
             MessageEntry messageEntry = new MessageEntry();
-            messageEntry.setProperties(new MessageEntry.properties());
+            MessageEntry.properties properties = new MessageEntry.properties();
+            properties.setContent_type("application/json");
+            messageEntry.setProperties(properties);
             messageEntry.setPayload(line);
             String jsonString = JSONObject.toJSONString(messageEntry);
 

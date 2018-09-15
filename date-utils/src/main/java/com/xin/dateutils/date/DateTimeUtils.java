@@ -21,21 +21,21 @@ public class DateTimeUtils {
 
     }
 
-    public static Date convertLDT(LocalDateTime localDateTime) {
+    public static synchronized Date convertLDT(LocalDateTime localDateTime) {
         ZoneId zone = ZoneId.systemDefault();
         Instant instant = localDateTime.atZone(zone).toInstant();
         Date date = Date.from(instant);
         return date;
     }
 
-    public static LocalDateTime convertDate(Date date) {
+    public static synchronized LocalDateTime convertDate(Date date) {
         Instant instant = date.toInstant();
         ZoneId zoneId = ZoneId.systemDefault();
         LocalDateTime localDateTime = instant.atZone(zoneId).toLocalDateTime();
         return localDateTime;
     }
 
-    public static String theMinuteOfPoint(LocalDateTime localDateTime, int minuteGap) {
+    public static synchronized String theMinuteOfPoint(LocalDateTime localDateTime, int minuteGap) {
         String theDateTime = null;
         if (minuteGap > 0) {
             theDateTime = localDateTime.plusMinutes(minuteGap).format(DateTimeFormatter.ofPattern(DateTimeFormatConstant.yyyyMMddHHmmssSSS));

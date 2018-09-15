@@ -19,7 +19,7 @@ public class DateParseUtils implements IDate {
 
     private DateParseUtils(){}
 
-    public static Date plain(String plainStr) {
+    public static synchronized Date plain(String plainStr) {
         try {
             return PLAIN_SDF.parse(plainStr);
         } catch (ParseException e) {
@@ -27,11 +27,11 @@ public class DateParseUtils implements IDate {
         }
     }
 
-    public static LocalDate plain4LDT(String plainStr) {
+    public static synchronized LocalDate plain4LDT(String plainStr) {
         return LocalDate.parse(plainStr, DateTimeFormatter.ofPattern(DateFormatConstant.plain));
     }
 
-    public static Date standard(String standardStr) {
+    public static synchronized Date standard(String standardStr) {
         try {
             return STANDARD_SDF.parse(standardStr);
         } catch (ParseException e) {
@@ -39,7 +39,7 @@ public class DateParseUtils implements IDate {
         }
     }
 
-    public static LocalDate standard4LDT(String standardStr) {
+    public static synchronized LocalDate standard4LDT(String standardStr) {
         return LocalDate.parse(standardStr, DateTimeFormatter.ofPattern(DateFormatConstant.standard));
     }
 }
