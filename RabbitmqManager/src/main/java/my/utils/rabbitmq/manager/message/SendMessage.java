@@ -20,10 +20,10 @@ import java.util.List;
  */
 public class SendMessage {
 
-    public static final String URL = "http://172.16.2.26:15672/api/exchanges/uxinpay.xin.com/all-to-monitor/publish/";
+    public static final String URL = "http://172.16.2.26:15672/api/exchanges/uxinpay.xin.com/trade-to-payment/publish/";
 
     public static void main(String[] args) throws Exception {
-        File file = new File("/data/rmq/pay-monitor");
+        File file = new File("/data/rmq/pay-trade-6");
         BufferedReader reader = Files.newReader(file, Charsets.UTF_8);
 
         OkHttpClient client = HttpFactory.getNewInstants();
