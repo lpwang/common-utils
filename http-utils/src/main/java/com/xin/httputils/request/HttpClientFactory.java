@@ -2,6 +2,8 @@ package com.xin.httputils.request;
 
 import okhttp3.OkHttpClient;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author lpwang
  * @Title HttpClientFactory
@@ -22,5 +24,14 @@ public class HttpClientFactory {
     public static OkHttpClient getNewInstance() {
         return new OkHttpClient();
     }
+
+    public static OkHttpClient getNewInstance(int connectTimeout, int readTimeout, int writeTimeout) {
+        return new OkHttpClient
+                .Builder()
+                .readTimeout(readTimeout, TimeUnit.SECONDS)
+                .writeTimeout(writeTimeout, TimeUnit.SECONDS)
+                .connectTimeout(connectTimeout, TimeUnit.SECONDS).build();
+    }
+
 
 }

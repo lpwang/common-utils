@@ -44,6 +44,13 @@ public class SyncHttp implements IHttp {
     }
 
     @Override
+    public String jsonRequest(String url, Object obj, int connectTimeout, int readTimeout, int writeTimeout) {
+        OkHttpClient client = HttpClientFactory.getNewInstance(connectTimeout, readTimeout, writeTimeout);
+        Request request = RequestFactory.newPostRequest(url, JSONObject.toJSONString(obj));
+        return call(client, request);
+    }
+
+    @Override
     public String formReqeust(String url, Map<String, String> requestMap) {
         OkHttpClient client = HttpClientFactory.getNewInstance();
         Request request = RequestFactory.newFormRequest(url, requestMap);
@@ -51,8 +58,22 @@ public class SyncHttp implements IHttp {
     }
 
     @Override
+    public String formReqeust(String url, Map<String, String> requestMap, int connectTimeout, int readTimeout, int writeTimeout) {
+        OkHttpClient client = HttpClientFactory.getNewInstance(connectTimeout, readTimeout, writeTimeout);
+        Request request = RequestFactory.newFormRequest(url, requestMap);
+        return call(client, request);
+    }
+
+    @Override
     public String xmlRequest(String url, String xmlStr) {
         OkHttpClient client = HttpClientFactory.getNewInstance();
+        Request request = RequestFactory.newPostRequest(url, xmlStr);
+        return call(client, request);
+    }
+
+    @Override
+    public String xmlRequest(String url, String xmlStr, int connectTimeout, int readTimeout, int writeTimeout) {
+        OkHttpClient client = HttpClientFactory.getNewInstance(connectTimeout, readTimeout, writeTimeout);
         Request request = RequestFactory.newPostRequest(url, xmlStr);
         return call(client, request);
     }

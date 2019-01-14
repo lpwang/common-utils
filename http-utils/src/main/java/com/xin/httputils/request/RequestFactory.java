@@ -35,7 +35,7 @@ public class RequestFactory {
 
     public static Request newPostRequest(String url, String respBody) {
         if (null != respBody && respBody.length() > 0) {
-            RequestBody requestBody = RequestBody.create(MediaType.parse("text/plain;charset=utf-8"), respBody);
+            RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=utf-8"), respBody);
             return new Request.Builder().post(requestBody).url(url).build();
         } else {
             throw new RuntimeException("请求体数据不能为空!");

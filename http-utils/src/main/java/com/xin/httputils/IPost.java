@@ -15,8 +15,14 @@ public interface IPost {
 
     String jsonRequest(String url, Object obj);
 
+    String jsonRequest(String url, Object obj, int connectTimeout, int readTimeout, int writeTimeout);
+
+    String formReqeust(String url, Map<String, String> requestMap, int connectTimeout, int readTimeout, int writeTimeout);
+
     String formReqeust(String url, Map<String, String> requestMap);
 
     String xmlRequest(String url, String xmlStr);
+
+    String xmlRequest(String url, String xmlStr, int connectTimeout, int readTimeout, int writeTimeout);
 
 }

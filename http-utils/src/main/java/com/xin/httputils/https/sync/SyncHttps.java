@@ -63,6 +63,12 @@ public class SyncHttps implements IHttp {
     }
 
     @Override
+    public String jsonRequest(String url, Object obj, int connectTimeout, int readTimeout, int writeTimeout) {
+        //todo 未开始
+        return null;
+    }
+
+    @Override
     public String formReqeust(String url, Map<String, String> requestMap) {
         OkHttpClient client = null;
         try {
